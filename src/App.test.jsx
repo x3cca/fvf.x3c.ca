@@ -1,10 +1,11 @@
 import { cleanup, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { afterEach, describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import App from './App';
 
 afterEach(() => {
   cleanup();
+  vi.useRealTimers();
   window.history.replaceState({}, '', '/');
 });
 
@@ -25,6 +26,8 @@ describe('App deck interactions', () => {
   });
 
   it('announces the new domain and shares its canonical URL', () => {
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date('2026-08-12T00:00:00-07:00'));
     window.history.replaceState({}, '', '/?deck=1');
     render(<App />);
 
