@@ -4,12 +4,14 @@ import './App.css';
 import Card from './Card';
 import DropDown from './DropDown';
 import Footer from './Footer';
+import MigrationNotice from './MigrationNotice';
 import NotFound from './NotFound';
 import Radio from './Radio';
 import TextInput from './TextInput';
 import TopBar from './TopBar';
 import { allCards, defaultCardSort } from './const';
 import useDeckState from './hooks/useDeckState';
+import { createCanonicalUrl } from './siteUrl';
 
 const CARD_TYPE_VALUE = {
   Personality: 0,
@@ -71,6 +73,7 @@ export default function App() {
   const [cardSort, setCardSort] = useState('id');
   const [successfulCopies, setSuccessfulCopies] = useState([]);
   const copyPasteRef = useRef();
+  const isItchBuild = import.meta.env.MODE === 'itch';
 
   const myCards = useMemo(
     () => myDeck.filter((card) => card.type !== 'Personality'),
@@ -94,7 +97,9 @@ export default function App() {
       .sort(CARD_SORTERS[cardSort]);
   }, [cardFilter, cardSearch, cardSort]);
 
-  const shareableUrl = window.location.href;
+  const shareableUrl = isItchBuild
+    ? window.location.href
+    : createCanonicalUrl(window.location);
   const copyShareableUrl = useCallback(
     async (event) => {
       copyPasteRef.current?.select();
@@ -118,8 +123,6 @@ export default function App() {
 
   const deckCost = myCards.reduce((total, card) => total + card.cost, 0);
   const deckIsEmpty = myDeck.length === 0;
-  const isItchBuild = import.meta.env.MODE === 'itch';
-
   return (
     <div className="App">
       {successfulCopies.map((copyEvent) => (
@@ -133,6 +136,8 @@ export default function App() {
           }
         />
       ))}
+
+      {!isItchBuild && <MigrationNotice />}
 
       <TopBar
         deckCost={deckCost}

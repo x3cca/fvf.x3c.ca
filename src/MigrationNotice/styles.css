@@ -1,0 +1,16 @@
+.MigrationNotice {
+  margin: 0.5rem 0 1rem;
+  padding: 0.65rem 1rem;
+  border: 0.12em solid white;
+  outline: 0.12em solid black;
+  border-radius: 0.5rem;
+  background: rgb(112, 40, 139);
+  font-family: 'Kenyan Coffee';
+  font-size: 0.75em;
+  line-height: 1.25;
+  text-align: center;
+}
+
+.MigrationNotice a {
+  white-space: nowrap;
+}

@@ -11,10 +11,8 @@ export default function Footer() {
       <br />
       <div>
         FvF Deck Builder is an{' '}
-        <a href="https://github.com/CoolDotty/FriendsVsFriends.help">
-          open-source project
-        </a>{' '}
-        maintained with 💔 by its contributors
+        <a href="https://github.com/x3cca/fvf.x3c.ca">open-source project</a> maintained
+        with 💔 by its contributors
       </div>
     </footer>
   );

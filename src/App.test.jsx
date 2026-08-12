@@ -24,6 +24,20 @@ describe('App deck interactions', () => {
     ).toHaveLength(2);
   });
 
+  it('announces the new domain and shares its canonical URL', () => {
+    window.history.replaceState({}, '', '/?deck=1');
+    render(<App />);
+
+    expect(screen.getByRole('status', { name: 'Site migration' })).toHaveTextContent(
+      'FriendsVsFriends.help has moved'
+    );
+    expect(screen.getByRole('link', { name: 'fvf.x3c.ca' })).toHaveAttribute(
+      'href',
+      'https://fvf.x3c.ca/'
+    );
+    expect(screen.getByDisplayValue('https://fvf.x3c.ca/?deck=1')).toBeInTheDocument();
+  });
+
   it('canonicalizes malformed deck URLs without losing valid cards', async () => {
     window.history.replaceState({}, '', '/?deck=9999.1.1.nope');
     render(<App />);
