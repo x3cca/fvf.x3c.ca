@@ -1,6 +1,7 @@
 import { cleanup, render, screen } from '@testing-library/react';
 import { afterEach, describe, expect, it } from 'vitest';
-import MigrationNotice, { MIGRATION_NOTICE_END } from '.';
+import MigrationNotice from '.';
+import { MIGRATION_NOTICE_END } from './migrationNotice';
 
 afterEach(cleanup);
 
