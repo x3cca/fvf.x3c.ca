@@ -52,7 +52,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: itch-build
-          path: ./fvf-decks-itch.zip
+          path: ./dist
           if-no-files-found: error
 
   deploy:
@@ -75,13 +75,15 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: itch-build
+          path: ./itch-build
 
       - name: Set up butler
         uses: remarkablegames/setup-butler@0cd7c23a08590447459b75779fc27d8a0197ed1b
 
       - name: Deploy browser build
-        run: >-
-          butler push fvf-decks-itch.zip cooldotty/fvf-decks:html5 --if-changed
-          --userversion "${{ github.sha }}"
+        run: |
+          butler push itch-build cooldotty/fvf-decks:html5 \
+            --if-changed \
+            --userversion "${{ github.sha }}"
         env:
           BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
